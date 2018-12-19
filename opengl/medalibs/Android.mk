@@ -9,7 +9,7 @@ egl.cfg_config_module :=
 ifneq ($(BOARD_EGL_CFG),)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := egl.cfg
+LOCAL_MODULE := egl.cfg_Secure
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_MODULE_PATH := $(TARGET_OUT)/lib/egl
@@ -20,25 +20,25 @@ endif
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:= 	       \
-	EGL/egl_tls.cpp        \
-	EGL/egl_cache.cpp      \
-	EGL/egl_display.cpp    \
-	EGL/egl_object.cpp     \
-	EGL/egl.cpp 	       \
-	EGL/eglApi.cpp 	       \
-	EGL/getProcAddress.cpp.arm \
-	EGL/Loader.cpp 	       \
+LOCAL_SRC_FILES:=         \
+   EGL/egl_tls.cpp        \
+   EGL/egl_cache.cpp      \
+   EGL/egl_display.cpp    \
+   EGL/egl_object.cpp     \
+   EGL/egl.cpp            \
+   EGL/eglApi.cpp         \
+   EGL/getProcAddress.cpp.arm \
+   EGL/Loader.cpp         \
 #
 
 LOCAL_SHARED_LIBRARIES += libbinder libcutils libutils liblog libui
-LOCAL_MODULE:= libEGL
+LOCAL_MODULE:= libEGL_Secure
 LOCAL_LDFLAGS += -Wl,--exclude-libs=ALL
 LOCAL_SHARED_LIBRARIES += libdl
 # we need to access the private Bionic header <bionic_tls.h>
 LOCAL_C_INCLUDES += bionic/libc/private
 
-LOCAL_CFLAGS += -DLOG_TAG=\"libEGL\"
+LOCAL_CFLAGS += -DLOG_TAG=\"libEGL_Secure\"
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 LOCAL_CFLAGS += -fvisibility=hidden
 
@@ -80,13 +80,13 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:= 		\
-	GLES_CM/gl.cpp.arm 	\
+LOCAL_SRC_FILES:=      \
+   GLES_CM/gl.cpp.arm  \
 #
 
 LOCAL_CLANG := false
 LOCAL_SHARED_LIBRARIES += libcutils liblog libEGL
-LOCAL_MODULE:= libGLESv1_CM
+LOCAL_MODULE:= libGLESv1_CM_Secure
 
 LOCAL_SHARED_LIBRARIES += libdl
 # we need to access the private Bionic header <bionic_tls.h>
@@ -108,18 +108,24 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:= \
-	GLES2/gl2.cpp   \
+#LOCAL_MODULE:= libChromium
+
+LOCAL_SRC_FILES:=   \
+   GLES2/gl2.cpp   \
 #
 
 LOCAL_CLANG := false
 LOCAL_ARM_MODE := arm
-LOCAL_SHARED_LIBRARIES += libcutils libutils liblog libEGL
-LOCAL_MODULE:= libGLESv2
+LOCAL_SHARED_LIBRARIES += libcutils libutils liblog libEGL_Secure
+LOCAL_MODULE:= libGLESv2_Secure
 
 LOCAL_SHARED_LIBRARIES += libdl
 # we need to access the private Bionic header <bionic_tls.h>
 LOCAL_C_INCLUDES += bionic/libc/private
+
+# LOCAL_CPPFLAGS += -std=c++14
+LOCAL_CFLAGS += -Wno-error=return-type
+LOCAL_CFLAGS += -Wno-error=non-virtual-dtor
 
 LOCAL_CFLAGS += -DLOG_TAG=\"libGLESv2\"
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
@@ -135,20 +141,25 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:= \
-	GLES2/gl2.cpp   \
+LOCAL_SRC_FILES:=   \
+   GLES2/gl2.cpp   \
 #
 
 LOCAL_CLANG := false
 LOCAL_ARM_MODE := arm
 LOCAL_SHARED_LIBRARIES += libcutils libutils liblog libEGL
-LOCAL_MODULE:= libGLESv3
+LOCAL_MODULE:= libGLESv3_Secure
 LOCAL_SHARED_LIBRARIES += libdl
 # we need to access the private Bionic header <bionic_tls.h>
 LOCAL_C_INCLUDES += bionic/libc/private
 
+# LOCAL_CPPFLAGS += -std=c++14
+LOCAL_CFLAGS += -Wno-error=return-type
+LOCAL_CFLAGS += -Wno-error=non-virtual-dtor
+
 LOCAL_CFLAGS += -DLOG_TAG=\"libGLESv3\"
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
+LOCAL_CFLAGS += -fvisibility=hidden
 
 # TODO: This is to work around b/20093774. Remove after root cause is fixed
 LOCAL_LDFLAGS_arm += -Wl,--hash-style,both
@@ -161,11 +172,11 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:= 		\
-	ETC1/etc1.cpp 	\
+LOCAL_SRC_FILES:=      \
+   ETC1/etc1.cpp   \
 #
 
-LOCAL_MODULE:= libETC1
+LOCAL_MODULE:= libETC1_Secure
 LOCAL_MODULE_HOST_OS := darwin linux windows
 
 include $(BUILD_HOST_STATIC_LIBRARY)
@@ -176,11 +187,11 @@ include $(BUILD_HOST_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:= 		\
-	ETC1/etc1.cpp 	\
+LOCAL_SRC_FILES:=      \
+   ETC1/etc1.cpp   \
 #
 
-LOCAL_MODULE:= libETC1
+LOCAL_MODULE:= libETC1_Secure
 
 include $(BUILD_SHARED_LIBRARY)
 
